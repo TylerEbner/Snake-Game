@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.min.js'></script>
+    <script src="snake2.js"></script>
+    <script src="p5.sound.js"></script>
+  </head>
+  <body>
+    <h1 id = "yourScore"></h1>
+  <script>
+  var s;
+  var scl = 20;
+  var food;
+  var fRate = 10; //This is an integer that
+  var w = 600;
+  var h = 600;
+  
+  function preload() {
+    soundFormats('mp3', 'ogg');
+    pewPewSound = loadSound('Pew_Pew-DKnight556-1379997159.mp3');
+  }
+  
+  function setup() {
+    createCanvas(500,500);
+    s = new Snake();
+    background(0,0,0);
+    foodLocation();
+  }
+    
+  function draw() {
+    frameRate(fRate);
+    background(75,0,130);
+    s.show(); //show the snake
+    s.update(); //update the snakes direction
+    s.death();
+    fill(255,0,0); //This is for the food
+    rect(food.x, food.y, scl, scl); //This is the food shape
+    if (s.eat(food)) { //We run the eat function in the object constructor.
+      foodLocation(); //Run this fuction when the eat fucntion in the object contructor is true.
+    }
+  }
+  
+  function foodLocation() {
+    var cols = floor(width / scl);
+    var rows = floor(height / scl);
+    food = createVector(floor(random(cols)), floor(random(rows)));
+    food.mult(scl);
+  }
+  
+  function keyPressed() {
+    if (keyCode === UP_ARROW) { //move the snake up
+      s.dir(0,-1);
+    }
+    else if (keyCode === DOWN_ARROW) { //move the snake down
+      s.dir(0,1);
+    }
+    else if (keyCode === LEFT_ARROW) { //move the snake left
+      s.dir(-1,0);
+    }
+    else if (keyCode === RIGHT_ARROW) { //move the snake right
+      s.dir(1,0);
+    }
+ }
+    </script>
+  </body>
+</html>
